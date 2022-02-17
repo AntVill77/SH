@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Marvel Comics</string>
+    <string name="common_error">Erro inesperado</string>
+
+    <!--ACTIONS-->
+    <string name="action_ok">OK</string>
+    <string name="action_ok_i_got_it">OK, Entendi</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_continue">Continuar</string>
+    <string name="action_yes">Sim</string>
+    <string name="action_no">Não</string>
+    <string name="action_draw_route">Traçar Rota</string>
+    <string name="action_take_picture">Tirar Foto</string>
+    <string name="action_try_again">Tentar Novamente</string>
+
+    <string name="poster_game_title">Titulo</string>
+    <string name="comic_description">Descrição</string>
+    <string name="comic_price">Preço: %s</string>
+    <string name="btn_most_expensive_text">R$</string>
+
+    <!--NO NETWORK ERRORS-->
+    <string name="no_network_connection">Sem conexão com internet</string>
+
+</resources>
