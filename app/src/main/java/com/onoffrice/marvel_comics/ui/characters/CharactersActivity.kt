@@ -1,25 +1,26 @@
 package com.onoffrice.marvel_comics.ui.characters
 
 import android.content.Context
+import android.content.Intent
 import android.nfc.tech.MifareUltralight
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.onoffrice.marvel_comics.R
 import com.onoffrice.marvel_comics.data.remote.model.Character
+import com.onoffrice.marvel_comics.databinding.ActivityCharactersBinding
 import com.onoffrice.marvel_comics.ui.base.BaseActivity
 import com.onoffrice.marvel_comics.ui.characterDetail.createCharacterDetailActivityIntent
 import com.onoffrice.marvel_comics.utils.extensions.isNetworkConnected
 import com.onoffrice.marvel_comics.utils.extensions.startActivitySlideTransition
-import kotlinx.android.synthetic.main.activity_characters.*
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
-class CharactersActivity : BaseActivity(R.layout.activity_characters) {
+class CharactersActivity : BaseActivity(null) {
 
     private val viewModel by inject<CharactersViewModel>()
+    private lateinit var binding: ActivityCharactersBinding
 
     private var isLoading: Boolean = false
 
@@ -32,14 +33,17 @@ class CharactersActivity : BaseActivity(R.layout.activity_characters) {
         })
 
         val layoutManager          = GridLayoutManager(this, 2)
-        charactersRv.layoutManager = layoutManager
-        charactersRv.adapter       = adapter
-        charactersRv.addOnScrollListener(onScrollListener())
+        binding.charactersRv.layoutManager = layoutManager
+        binding.charactersRv.adapter       = adapter
+        binding.charactersRv.addOnScrollListener(onScrollListener())
         adapter
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityCharactersBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        
         setObservers()
         setListeners()
         getCharacters()
@@ -47,7 +51,7 @@ class CharactersActivity : BaseActivity(R.layout.activity_characters) {
     }
 
     private fun setListeners() {
-        swipeRefresh.setOnRefreshListener {
+        binding.swipeRefresh.setOnRefreshListener {
             charactersAdapter.resetList()
             getCharacters()
         }
@@ -77,7 +81,7 @@ class CharactersActivity : BaseActivity(R.layout.activity_characters) {
         if (isNetworkConnected()) {
             viewModel.getCharacters(totalItemCount)
         } else {
-            toast(getString(R.string.no_network_connection))
+            Toast.makeText(this, getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -95,12 +99,11 @@ class CharactersActivity : BaseActivity(R.layout.activity_characters) {
     }
 
     private fun displayLoading(loading: Boolean) {
-        swipeRefresh.isRefreshing = loading
+        binding.swipeRefresh.isRefreshing = loading
     }
 
     private fun displayError(message: String) {
-      toast(message)
+      Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
-fun Context.createCharactersActivityIntent() = intentFor<CharactersActivity>()
-
+fun Context.createCharactersActivityIntent() = Intent(this, CharactersActivity::class.java)

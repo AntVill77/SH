@@ -6,15 +6,18 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.onoffrice.marvel_comics.R
+import com.onoffrice.marvel_comics.databinding.ActivitySplashBinding
 import com.onoffrice.marvel_comics.ui.characters.createCharactersActivityIntent
 import com.onoffrice.marvel_comics.utils.extensions.startActivitySlideTransition
-import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivitySplashBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setLogoAnimation()
         setDelayForActivity()
     }
@@ -33,6 +36,6 @@ class SplashActivity : AppCompatActivity() {
         animation.duration       = 2000
         animation.fillAfter      = true
         animation.repeatMode     = Animation.REVERSE
-        splash_logo.startAnimation(animation)
+        binding.splashLogo.startAnimation(animation)
     }
 }

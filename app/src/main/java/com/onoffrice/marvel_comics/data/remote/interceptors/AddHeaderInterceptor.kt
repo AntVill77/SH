@@ -25,7 +25,7 @@ class AddHeaderInterceptor : Interceptor {
                     request.addHeader(it.name, it.value)
                 }
             }
-                .method(original.method(), original.body())
+                .method(original.method, original.body)
                 .build()
 
         return chain.proceed(request)

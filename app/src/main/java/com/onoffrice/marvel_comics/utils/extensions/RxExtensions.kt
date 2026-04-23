@@ -8,7 +8,7 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subscribers.DisposableSubscriber
 
-fun <T> Single<T>.singleSubscribe(
+fun <T : Any> Single<T>.singleSubscribe(
         onLoading: ((t: Boolean) -> Unit)? = null,
         onSuccess: ((t: T) -> Unit)? = null,
         onError: ((e: Throwable) -> Unit)? = null,

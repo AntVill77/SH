@@ -1,14 +1,12 @@
 package com.onoffrice.marvel_comics.ui.characters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.onoffrice.marvel_comics.R
 import com.onoffrice.marvel_comics.data.remote.model.Character
+import com.onoffrice.marvel_comics.databinding.AdapterCharacterItemBinding
 import com.onoffrice.marvel_comics.utils.extensions.fadeUpItemListAnimation
 import com.onoffrice.marvel_comics.utils.extensions.loadImage
-import kotlinx.android.synthetic.main.adapter_character_item.view.*
 
 class CharactersAdapter (private val listener: CharacterClickListener?): RecyclerView.Adapter<CharactersAdapter.GameViewHolderItem>() {
 
@@ -28,10 +26,8 @@ class CharactersAdapter (private val listener: CharacterClickListener?): Recycle
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): GameViewHolderItem {
-        val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.adapter_character_item, parent, false)
-
-        return GameViewHolderItem(view)
+        val binding = AdapterCharacterItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return GameViewHolderItem(binding)
     }
 
     override fun getItemCount(): Int {
@@ -44,8 +40,8 @@ class CharactersAdapter (private val listener: CharacterClickListener?): Recycle
         val characterItem = list[position]
 
         characterItem.let {
-            holder.title.text = characterItem.name
-            holder.poster.loadImage(characterItem.thumbnail.getPathExtension())
+            holder.binding.title.text = characterItem.name
+            holder.binding.poster.loadImage(characterItem.thumbnail.getPathExtension())
 
             // Character click listener
             holder.itemView.setOnClickListener {
@@ -59,8 +55,5 @@ class CharactersAdapter (private val listener: CharacterClickListener?): Recycle
         notifyDataSetChanged()
     }
 
-    class GameViewHolderItem(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val poster= itemView.poster
-        val title  = itemView.title
-    }
+    class GameViewHolderItem(val binding: AdapterCharacterItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

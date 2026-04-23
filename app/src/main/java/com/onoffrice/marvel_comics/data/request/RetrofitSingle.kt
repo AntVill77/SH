@@ -1,6 +1,6 @@
 package com.onoffrice.marvel_comics.data.request
 
-import androidx.multidex.BuildConfig
+import com.onoffrice.marvel_comics.BuildConfig
 import com.onoffrice.marvel_comics.NetworkConstants
 import com.onoffrice.marvel_comics.data.remote.hashGenerator.MarvelHashGenerate
 import okhttp3.Interceptor
@@ -39,7 +39,7 @@ object RetrofitSingle{
     private fun createParametersDefault(chain: Interceptor.Chain): Response {
         val timeStamp      = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
         var request      = chain.request()
-        val builder = request.url().newBuilder()
+        val builder = request.url.newBuilder()
 
         builder
             .addQueryParameter("apikey", NetworkConstants.API_PUBLIC_KEY)
